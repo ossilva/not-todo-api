@@ -39,17 +39,23 @@ router.get('/all', authenticate, async (req, res) => {
 		const bucketParam = { Bucket: process.env.BUCKET }
 		const imagesContent = (await s3.listObjectsV2(bucketParam).promise()).Contents
 		console.log(imagesContent)
-		const images = imagesContent.map(({ Key, LastModified }) => ({ Key, LastModified }))
+		const images = imagesContent.map(({ Key, LastModified, Metadata }) => (
+                { Key, LastModified, Metadata }
+            ))
 		const imgUrlPromises = images.map(imgObj => imgObj.Key).map(Key => {
 			return (
 				s3.getSignedUrlPromise( 'getObject', { ...bucketParam, Key })
 			)
 		})
 		const imgUrls = await Promise.all(imgUrlPromises)
-		console.log(imgUrls)
 		images.forEach((imgObj, i) => {
+            if (imgObj.Metadata) {
+                        imgObj.img_width = imgObj.Metadata['x-amz-meta-img_width']
+                        imgObj.img_height = imgObj.Metadata['x-amz-meta-img_height']
+            }
 			imgObj.url = imgUrls[i]
-		})
+        })
+        console.log(images)
 		res.status(200).json(images);
 	} catch (err) {
 		console.log(err)
