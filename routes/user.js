@@ -1,10 +1,6 @@
 const express = require("express");
 const { authenticate } = require("../middleware/authenticate");
-const {
-  genToken,
-  validateToken,
-  validatePassphrase
-} = require("../util/cipherAWS");
+const { genToken, validatePassphrase } = require("../util/cipherAWS");
 
 const router = express.Router();
 
