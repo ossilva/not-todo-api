@@ -1,4 +1,8 @@
 const express = require("express");
+<<<<<<< HEAD
+=======
+const _ = require("lodash");
+>>>>>>> e67e3ce59c2af9f441f2ee922a99611fc4324757
 const { authenticate } = require("../middleware/authenticate");
 const {
   genToken,
