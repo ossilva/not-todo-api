@@ -18,6 +18,8 @@ app.use(
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use(express.static("public"));
+
 app.use("/api/user", user);
 app.use("/api/post", post);
 app.use("/api/images", images);
