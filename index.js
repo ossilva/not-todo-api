@@ -5,15 +5,10 @@ const user = require("./routes/user");
 const post = require("./routes/post");
 const images = require("./routes/images");
 const s3 = require("./routes/s3");
-const { allowed_url } = require("./config/config.js");
 
 const app = express();
 
-app.use(
-  Cors({
-    origin: allowed_url
-  })
-);
+app.use(Cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
