@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "build:frontend": "rm -fr public && cd ..\\upload-gallery && npm run build && cp -r build ..\\jwt-rest-backend\\public"
   },
-  "author": "smakosh",
+  "author": "ossilva",
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.636.0",
