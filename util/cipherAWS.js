@@ -1,6 +1,7 @@
 require("dotenv").config();
 const crypto = require("crypto");
-const S3 = require("aws-sdk/clients/s3");
+
+const AWS = require("aws-sdk");
 
 const credsEnc = process.env.CREDS_ENCRYPTED;
 
@@ -61,10 +62,11 @@ const getS3ForPass = async passphrase => {
   const options = { Bucket: process.env.BUCKET };
   const region = process.env.BUCKET_REGION;
   const signatureVersion = process.env.SIGN_V;
-  const creds = decipherCreds(passphrase);
+  const readCreds = decipherCreds(passphrase);
+  const credentials = new AWS.Credentials({ ...readCreds });
   try {
-    const s3 = new S3({
-      params: { ...creds },
+    const s3 = new AWS.S3({
+      credentials,
       region,
       signatureVersion,
       s3ForcePathStyle: "true"
