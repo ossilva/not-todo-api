@@ -20,7 +20,7 @@ router.post("/login", async (req, res) => {
     res.json({ token });
   } catch (err) {
     console.log(err);
-    res.status(400).json({ error: "Incorrect passphrase", fullErr: err });
+    res.status(400).json({ error: "failed to authenticate" });
   }
 });
 
